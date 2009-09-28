@@ -25,6 +25,10 @@ Example Usage:
     In [3]: fb.api("fql.query", {"query": "SELECT name FROM user WHERE uid = 1160"}) 
     Out[3]: [{'name': 'Charlie Cheever'}]
 
+    # Extra keyword arguments will be treated as part of the params
+    In [3]: fb.api("fql.query", query="SELECT name FROM user WHERE uid = 1160")
+    Out[3]: [{'name': 'Charlie Cheever'}]
+
 
 """
 
@@ -55,7 +59,7 @@ except ImportError:
         except ImportError:
             raise ImportError("Either cjson or json or simplejson is required by Muse")
 
-MAX_CONCURRENT_API_CALLS = 10
+MAX_CONCURRENT_API_CALLS = 4
 
 _pool = threading.BoundedSemaphore(MAX_CONCURRENT_API_CALLS)
 

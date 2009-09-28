@@ -76,3 +76,32 @@ def test_async_fail():
 def test_kwargs_call():
     fb = muse.Muse(test_app_api_key, test_app_secret)
     assert fb.api("fql.query", query="SELECT name FROM user WHERE uid = 1160") == my_name
+
+def test_async_limit():
+    """We try to test to make sure that we don't kick off more than 
+        MAX_CONCURRENT_API_CALLS API calls at once.
+
+        This test might misleadingly fail under some weird circumstances
+        that don't indicate a problem with the library.
+
+    """
+    fb = muse.Muse(test_app_api_key, test_app_secret, test_account_session_key)
+
+    done = {}
+    def cb(result, session, other_data):
+        done[other_data] = True
+
+    threads = {}
+    max = muse.MAX_CONCURRENT_API_CALLS + 1
+    for i in range(muse.MAX_CONCURRENT_API_CALLS + 1):
+        threads[i] = fb.api("friends.get", callback=cb, other_data=i)
+
+    while not done:
+        pass
+
+    assert not done.has_key(muse.MAX_CONCURRENT_API_CALLS)
+
+    for i in range(max):
+        threads[i].join()
+
+
