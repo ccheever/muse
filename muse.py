@@ -1,9 +1,18 @@
 __doc__ = """
-MuSE 
+Muse (= Mu - Server Edition)
 
-Mu - Server Edition
+Muse is a Facebook Connect API client written in Python.  It is lightweight, 
+small, and pretty transparent.  It leaves it up to you to manage your own
+sessions, and it doesn't ever try to touch cookiesor anything like that.
+It support asynchronous API calls, and its interface is pretty raw--you
+explicitly specify the method name and all the parameters which means it
+should support any future method added to the API seamlessly.
 
-A loose port of the Mu Facebook Connect client in JavaScript by Naitik Shah
+Muse isn't a great solution for making in-canvas Facebook apps since it 
+doesn't provide much besides a server-side API.
+
+Muse is a server-side complement and loose port of the Mu Facebook Connect 
+client in JavaScript by Naitik Shah
     http://mu.daaku.org/
     http://github.com/nshah/mu
 
