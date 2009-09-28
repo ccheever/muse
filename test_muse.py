@@ -72,3 +72,7 @@ def test_async_fail():
     t.join()
     
     assert failed["done"]
+
+def test_kwargs_call():
+    fb = muse.Muse(test_app_api_key, test_app_secret)
+    assert fb.api("fql.query", query="SELECT name FROM user WHERE uid = 1160") == my_name

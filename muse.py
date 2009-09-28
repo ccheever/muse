@@ -152,7 +152,7 @@ class Muse(object):
 
         return params
 
-    def api(self, method=None, params=None, callback=None, failure_callback=None, other_data=None, async=False):
+    def api(self, method=None, params=None, callback=None, failure_callback=None, other_data=None, async=False, **kwargs):
         """Call an API method"""
 
         if params is None:
@@ -160,6 +160,10 @@ class Muse(object):
         else:
             # Clone params so callers don't have things they pass get mutated
             params = dict(params)
+
+        # So we enable calling like fb.api("fql.query", query="SELECT ...)
+        if kwargs:
+            params.update(kwargs)
 
         if method is not None:
             params["method"] = method
