@@ -172,7 +172,7 @@ class Muse(object):
         if method is not None:
             params["method"] = method
 
-        if callback or failure_callback or other_data:
+        if callback or failure_callback:
             async = True
 
         url = self._json_url(params)
