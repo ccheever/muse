@@ -50,23 +50,22 @@ import time
 import hashlib
 import threading
 
+# We don't want to use cjson since it has a bug where it doesn't handle
+# '\/' correctly.  
+#
+# See: http://www.quora.com/q/Why_does_the_cjson_Python_module_not_correctly_unescape_reverse_solidus_solidus_
+#
+import json
+json_encode = json.dumps
+json_decode = json.loads
+json_error = ValueError
 try:
-    import cjson
-    json_encode = cjson.encode
-    json_decode = cjson.decode
-    json_error = cjson.Error
+    import simplejson
+    json_encode = simplejson.dumps
+    json_decode = simplejson.loads
+    json_error = ValueError
 except ImportError:
-        import json
-        json_encode = simplejson.dumps
-        json_decode = simplejson.loads
-        json_error = ValueError
-        try:
-            import simplejson
-            json_encode = simplejson.dumps
-            json_decode = simplejson.loads
-            json_error = ValueError
-        except ImportError:
-            raise ImportError("Either cjson or json or simplejson is required by Muse")
+    raise ImportError("Either cjson or json or simplejson is required by Muse")
 
 MAX_CONCURRENT_API_CALLS = 4
 
@@ -205,7 +204,10 @@ class Muse(object):
 
 
         if len(url) > 2000:
-            raise URLTooLongError("JSON only supports a maximum of 2000 bytes of input")
+            raise URLTooLongError("GET requests onl support a maximum of 2000 bytes of input")
+
+        # TODO(ccheever): At some point, make this use POST for API
+        # calls that are long.  We don't need this for now though.
 
         return url
 
