@@ -55,17 +55,13 @@ import threading
 #
 # See: http://www.quora.com/q/Why_does_the_cjson_Python_module_not_correctly_unescape_reverse_solidus_solidus_
 #
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 json_encode = json.dumps
 json_decode = json.loads
 json_error = ValueError
-try:
-    import simplejson
-    json_encode = simplejson.dumps
-    json_decode = simplejson.loads
-    json_error = ValueError
-except ImportError:
-    raise ImportError("Either cjson or json or simplejson is required by Muse")
 
 MAX_CONCURRENT_API_CALLS = 4
 

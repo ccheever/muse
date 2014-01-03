@@ -1,7 +1,7 @@
 import muse
 
-test_app_api_key = "4fce3d843afa190fb41c60e8d2b41469"
-test_app_secret = "70b33830655b8f1e7dadf9e43e67d3b6"
+test_app_api_key = "649242215119405"
+test_app_secret = "2d71a9f42daaf87d49dbdeee456b5b6f"
 
 test_account_session_key = "360d81e8f278c89328c86084-219770"
 test_account_session_secret = "93d6e352a907feb53461d711312491d3"
